@@ -27,3 +27,5 @@ Route::middleware(['role:almacenista'])->group(function () {
 });
 
 Route::resource('productos', ProductoController::class);
+
+Route::resource('movimientos', MovimientoController::class);
