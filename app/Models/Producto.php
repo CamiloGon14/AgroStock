@@ -27,4 +27,22 @@ class Producto extends Model
     {
         return $this->hasMany(Movimiento::class);
     }
+
+    public function getStockActualAttribute()
+    {
+        $entradas = $this->movimientos()
+            ->where('tipo', 'entrada')
+            ->sum('cantidad');
+
+        $salidas = $this->movimientos()
+            ->where('tipo', 'salida')
+            ->sum('cantidad');
+
+        return $entradas - $salidas;
+    }
+    
+    public function getAlertaStockAttribute()
+    {
+        return $this->stock_actual <= $this->stock_minimo;
+    }
 }

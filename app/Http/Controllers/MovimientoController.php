@@ -8,19 +8,19 @@ use Illuminate\Http\Request;
 
 class MovimientoController extends Controller
 {
-    public function store(Request $request)
+   public function store(Request $request)
 {
-    $movimiento = Movimiento::create($request->all());
-
     $producto = Producto::find($request->producto_id);
 
-    if ($request->tipo == 'entrada') {
-        $producto->stock += $request->cantidad;
-    } elseif ($request->tipo == 'salida') {
-        $producto->stock -= $request->cantidad;
+    if ($request->tipo == 'salida' && $producto->stock_actual < $request->cantidad) {
+        return back()->with('error', 'No hay suficiente stock');
     }
 
-    $producto->save();
+    Movimiento::create([
+        'producto_id' => $request->producto_id,
+        'tipo' => $request->tipo,
+        'cantidad' => $request->cantidad
+    ]);
 
     return redirect()->back()->with('success', 'Movimiento registrado');
 }

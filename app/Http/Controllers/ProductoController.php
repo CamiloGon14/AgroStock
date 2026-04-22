@@ -26,6 +26,12 @@ public function store(Request $request) {
     return redirect()->route('productos.index');
 }
 
+public function index()
+{
+    $productos = Producto::all();
+    return view('productos.index', compact('productos'));
+}
+
 public function edit(Producto $producto) {
     return view('productos.edit', compact('producto'));
 }
