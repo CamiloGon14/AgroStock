@@ -26,18 +26,18 @@ public function store(Request $request) {
     return redirect()->route('productos.index');
 }
 
-public function index()
-{
-    $productos = Producto::all();
-    return view('productos.index', compact('productos'));
-}
-
 public function edit(Producto $producto) {
     return view('productos.edit', compact('producto'));
 }
 
 public function update(Request $request, Producto $producto) {
-    $producto->update($request->all());
+    $validatedData = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'precio' => 'required|numeric',
+        'descripcion' => 'nullable|string',
+    ]);
+
+    $producto->update($validatedData);
     return redirect()->route('productos.index');
 }
 
