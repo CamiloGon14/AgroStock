@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\MovimientoController;
+use App\Http\Controllers\ReporteController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +32,5 @@ Route::middleware(['role:almacenista'])->group(function () {
 Route::resource('productos', ProductoController::class);
 
 Route::resource('movimientos', MovimientoController::class);
+
+Route::get('/reportes', [ReporteController::class, 'index']);
