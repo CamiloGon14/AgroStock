@@ -5,27 +5,31 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Database\Seeder;
 
-public function run()
+class UserSeeder extends Seeder
 {
-    // Asegurar que el rol admin existe
-    $adminRole = Role::firstOrCreate(['name' => 'admin']);
+    public function run()
+    {
+        // Asegurar que el rol admin existe
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
 
-    // Usuario Alejo
-    $alejo = User::create([
-        'name' => 'Alejo',
-        'email' => 'alejo@AgroStock.com',
-        'password' => Hash::make('12345678')
-    ]);
+        // Usuario Alejo
+        $alejo = User::create([
+            'name' => 'Alejo',
+            'email' => 'alejo@AgroStock.com',
+            'password' => Hash::make('12345678')
+        ]);
 
-    $alejo->assignRole($adminRole);
+        $alejo->assignRole($adminRole);
 
-    // Usuario Camilo
-    $camilo = User::create([
-        'name' => 'Camilo',
-        'email' => 'camilo@AgroStock.com',
-        'password' => Hash::make('12345678')
-    ]);
+        // Usuario Camilo
+        $camilo = User::create([
+            'name' => 'Camilo',
+            'email' => 'camilo@AgroStock.com',
+            'password' => Hash::make('12345678')
+        ]);
 
-    $camilo->assignRole($adminRole);
+        $camilo->assignRole($adminRole);
+    }
 }
