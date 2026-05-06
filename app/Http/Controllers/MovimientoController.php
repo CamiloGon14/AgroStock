@@ -8,8 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\StockException;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class MovimientoController extends Controller
 {
+    public function index()
+    {
+        $movimientos = Movimiento::with('producto')->get();
+
+        return response()->json($movimientos);
+    }
     public function store(Request $request)
         {
             $request->validate([
@@ -47,5 +55,29 @@ class MovimientoController extends Controller
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', __('Error al registrar movimiento: ') . $e->getMessage());
             }
+        }
+        public function create()
+        {
+            return response()->json(['message' => 'No implementado']);
+        }
+
+        public function show($id)
+        {
+            return response()->json(['message' => 'No implementado']);
+        }
+
+        public function edit($id)
+        {
+            return response()->json(['message' => 'No implementado']);
+        }
+
+        public function update(Request $request, $id)
+        {
+            return response()->json(['message' => 'No implementado']);
+        }
+
+        public function destroy($id)
+        {
+            return response()->json(['message' => 'No implementado']);
         }
 }
