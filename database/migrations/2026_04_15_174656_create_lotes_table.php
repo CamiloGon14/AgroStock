@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('producto_id')->constrained()->onDelete('cascade');
-            $table->foreignId('ubicacion_id')->constrained()->onDelete('cascade');
+           $table->foreignId('ubicacion_id')
+                ->constrained('ubicaciones')
+                ->cascadeOnDelete();
             $table->string('codigo_lote');
             $table->integer('cantidad');
             $table->date('fecha_vencimiento')->nullable();
