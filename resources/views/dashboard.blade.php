@@ -12,7 +12,7 @@
                 <div class="p-8 text-gray-900 flex flex-col md:flex-row items-start md:items-center justify-between">
                     <div>
                         <h3 class="text-3xl font-black tracking-tight mb-2">¡Bienvenido al sistema, {{ Auth::user()?->name ?? 'Usuario' }}!</h3>
-                        <p class="text-lg text-gray-500">Resumen general del inventario para Ganadería JJ y La Laguneta.</p>
+                        <p class="text-lg text-gray-500">Sistema centralizado para la administración, trazabilidad y control de insumos en tiempo real.</p>
                     </div>
                     <div class="mt-4 md:mt-0 hidden sm:block">
                         <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center border-2 border-amarillo-fuerte text-gray-900 shadow-sm">

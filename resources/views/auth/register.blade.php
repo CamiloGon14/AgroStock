@@ -30,7 +30,7 @@
 <body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
 
     <nav class="w-full bg-white border-b border-gray-100 py-4 px-8 flex justify-center items-center shadow-sm">
-        <a href="/" class="text-2xl font-black tracking-tighter text-gray-900">
+        <a href="/" class="text-2xl font-black tracking-tighter text-gray-900 hover:text-amarillo-oscuro transition-colors">
             AGROSTOCK
         </a>
     </nav>
@@ -72,7 +72,21 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-sm text-red-600" />
                 </div>
 
-                <div class="flex items-center justify-between mt-8">
+                <div class="pt-2">
+                    <label for="terms" class="flex items-start cursor-pointer group">
+                        <div class="flex items-center h-5">
+                            <input id="terms" name="terms" type="checkbox" required
+                                class="w-4 h-4 border border-gray-300 rounded bg-white focus:ring-2 focus:ring-amarillo-fuerte text-amarillo-fuerte cursor-pointer transition-all" />
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <span class="text-gray-600 group-hover:text-gray-900 transition-colors">
+                                He leído y acepto los <a href="#" class="font-bold text-amarillo-oscuro hover:underline">términos y condiciones</a> y la <a href="#" class="font-bold text-amarillo-oscuro hover:underline">política de privacidad</a>.
+                            </span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-between mt-8 pt-4 border-t border-gray-100">
                     <a class="underline underline-offset-4 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amarillo-fuerte transition-colors" href="{{ route('login') }}">
                         ¿Ya está registrado?
                     </a>
