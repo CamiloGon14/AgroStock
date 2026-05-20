@@ -6,78 +6,65 @@ use App\Models\Movimiento;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
-use App\Exceptions\StockException;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MovimientoController extends Controller
 {
     public function index()
     {
-        $movimientos = Movimiento::with('producto')->get();
-
-        return response()->json($movimientos);
+        // Traemos los movimientos ordenados desde el más reciente
+        $movimientos = Movimiento::with('producto')->latest()->get();
+        
+        // Lo enviamos a la vista visual (la tabla que acabamos de crear)
+        return view('movimientos.index', compact('movimientos'));
     }
+
+    public function create()
+    {
+        // Traemos los productos para mostrarlos en el menú desplegable
+        $productos = Producto::all();
+        return view('movimientos.create', compact('productos'));
+    }
+
     public function store(Request $request)
-        {
-            $request->validate([
-                'producto_id' => 'required|exists:productos,id',
-                'cantidad' => 'required|integer|min:1',
-                'tipo' => 'required|in:entrada,salida'
-            ]);
+    {
+        $request->validate([
+            'producto_id' => 'required|exists:productos,id',
+            'cantidad'    => 'required|integer|min:1',
+            'tipo'        => 'required|in:entrada,salida,ajuste',
+            'descripcion' => 'nullable|string'
+        ]);
 
-            try {
-                DB::transaction(function () use ($request) {
+        try {
+            DB::transaction(function () use ($request) {
+                $producto = Producto::findOrFail($request->producto_id);
 
-                    $producto = Producto::findOrFail($request->producto_id);
+                // Validar que haya stock suficiente para salidas
+                if ($request->tipo == 'salida' && $producto->stock < $request->cantidad) {
+                    throw new \Exception('No hay suficiente stock disponible para esta salida.');
+                }
 
-                    if ($request->tipo == 'salida' && $producto->stock_actual < $request->cantidad) {
-                        throw new StockException('No hay suficiente stock');
-                    }
-                    if ($request->tipo == 'entrada') {
-                        $producto->stock_actual += $request->cantidad;
-                    } else {
-                        $producto->stock_actual -= $request->cantidad;
-                    }
+                // Actualizar el stock del producto
+                if ($request->tipo == 'entrada' || $request->tipo == 'ajuste') {
+                    $producto->stock += $request->cantidad;
+                } else {
+                    $producto->stock -= $request->cantidad;
+                }
+                
+                $producto->save();
 
-                    $producto->save();
-                    Movimiento::create([
-                        'producto_id' => $request->producto_id,
-                        'tipo' => $request->tipo,
-                        'cantidad' => $request->cantidad,
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ]);
-                });
-                return redirect()->back()->with('success', __('Movimiento registrado'));
-            } catch (StockException $e) {
-                return redirect()->back()->with('error', __('Error de stock: ') . $e->getMessage());
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', __('Error al registrar movimiento: ') . $e->getMessage());
-            }
+                // Registrar el historial del movimiento
+                Movimiento::create([
+                    'producto_id' => $request->producto_id,
+                    'tipo'        => $request->tipo,
+                    'cantidad'    => $request->cantidad,
+                    'descripcion' => $request->descripcion,
+                ]);
+            });
+
+            return redirect()->route('movimientos.index')->with('success', 'Movimiento registrado correctamente.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
-        public function create()
-        {
-            return response()->json(['message' => 'No implementado']);
-        }
-
-        public function show($id)
-        {
-            return response()->json(['message' => 'No implementado']);
-        }
-
-        public function edit($id)
-        {
-            return response()->json(['message' => 'No implementado']);
-        }
-
-        public function update(Request $request, $id)
-        {
-            return response()->json(['message' => 'No implementado']);
-        }
-
-        public function destroy($id)
-        {
-            return response()->json(['message' => 'No implementado']);
-        }
+    }
 }

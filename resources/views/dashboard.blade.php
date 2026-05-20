@@ -37,11 +37,11 @@
                 </div>
 
                 <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:border-amarillo-fuerte hover:shadow-md transition-all group">
-                    <div class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-2">Acceso Rápido</div>
-                    <div class="text-3xl font-black text-gray-900 mb-4 group-hover:text-amarillo-oscuro transition-colors">Registrar</div>
-                    <p class="text-gray-600 mb-6 line-clamp-2">Añada un nuevo producto o insumo a la base de datos central.</p>
-                    <a href="{{ route('productos.create') }}" class="inline-flex items-center text-amarillo-oscuro hover:text-gray-900 font-bold transition-colors">
-                        Crear nuevo producto
+                    <div class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-2">Control de Stock</div>
+                    <div class="text-3xl font-black text-gray-900 mb-4 group-hover:text-amarillo-oscuro transition-colors">Movimientos</div>
+                    <p class="text-gray-600 mb-6 line-clamp-2">Registre entradas y salidas para actualizar el stock en tiempo real.</p>
+                    <a href="{{ route('movimientos.index') }}" class="inline-flex items-center text-amarillo-oscuro hover:text-gray-900 font-bold transition-colors">
+                        Gestionar movimientos
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </a>
                 </div>
