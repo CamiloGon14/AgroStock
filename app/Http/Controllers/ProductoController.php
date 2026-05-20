@@ -16,13 +16,17 @@ public function create() {
     return view('productos.create');
 }
 
-public function store(Request $request) {
+public function store(Request $request)
+{
     $validatedData = $request->validate([
         'nombre' => 'required|string|max:255',
         'precio' => 'required|numeric',
         'descripcion' => 'nullable|string',
+        'stock' => 'required|integer|min:0'
     ]);
+
     Producto::create($validatedData);
+
     return redirect()->route('productos.index');
 }
 

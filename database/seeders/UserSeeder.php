@@ -13,6 +13,8 @@ class UserSeeder extends Seeder
     {
         // Asegurar que el rol admin existe
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        // Asegurar que el rol almacenista existe
+        $almacenistaRole = Role::firstOrCreate(['name' => 'almacenista']);
 
         // Usuario Alejo
         $alejo = User::create([
@@ -21,7 +23,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
-        $alejo->assignRole($adminRole);
+        $alejo->assignRole($almacenistaRole);
 
         // Usuario Camilo
         $camilo = User::create([
