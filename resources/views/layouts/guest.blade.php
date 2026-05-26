@@ -5,26 +5,44 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Agrostock') }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800,900" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            amarillo: {
+                                fuerte: '#FFC107',
+                                oscuro: '#F59E0B',
+                            }
+                        },
+                        fontFamily: {
+                            sans: ['Instrument Sans', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        </script>
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+    <body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+        
+        <nav class="w-full bg-white border-b border-gray-100 py-4 px-8 flex justify-center items-center shadow-sm">
+            <a href="/" class="text-2xl font-black tracking-tighter text-gray-900 hover:text-amarillo-oscuro transition-colors">
+                AGROSTOCK
+            </a>
+        </nav>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+        <div class="flex-1 flex flex-col justify-center items-center pt-6 sm:pt-0 px-4">
+            
+            <div class="w-full sm:max-w-md px-8 py-10 bg-white shadow-lg overflow-hidden sm:rounded-xl border border-gray-100">
                 {{ $slot }}
             </div>
+            
         </div>
     </body>
 </html>

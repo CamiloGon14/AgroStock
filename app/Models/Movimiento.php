@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Movimiento extends Model
 {
@@ -10,9 +11,8 @@ class Movimiento extends Model
 
     protected $fillable = [
         'producto_id',
-        'tipo',
         'cantidad',
-        'descripcion'
+        'tipo'
     ];
 
     public function producto()
